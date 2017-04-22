@@ -11,5 +11,18 @@
   "dependencies": {
     "require": "^2.4.20"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "bowser": "^1.4.6",
+    "compass": "^0.1.1",
+    "grunt-cli": "^1.2.0",
+    "sass": "^0.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SHANG-PENG/GroceryStore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SHANG-PENG/GroceryStore/issues"
+  },
+  "homepage": "https://github.com/SHANG-PENG/GroceryStore#readme"
 }
