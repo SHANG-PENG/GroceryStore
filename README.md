@@ -1,7 +1,7 @@
 Grocery Store
 ========
 
-# d3-example #
+# d3-examples #
 
 1. donut-chart
 2. donut-chart-animate
