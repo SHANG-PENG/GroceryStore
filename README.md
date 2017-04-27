@@ -1,10 +1,16 @@
 Grocery Store
 ========
 
-# d3-examples #
+## d3-examples ##
 
+### donut-charts ###
 1. donut-chart
 2. donut-chart-animate
 3. donut-chart-legend
 4. donut-chart-center-style
 5. donut-chart-percentage
+
+
+### bar-charts ###
+1.bar-chart-sides-style
+
