@@ -188,8 +188,8 @@
             })
             .attr("height", Math.abs(y.rangeBand()))
             .on("click", function(d) {
-               var bar_data = document.getElementById("#bar_data");
-               bar_data.innerText(JSON.stringify(d));
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(d);
             });
       
         var padding = 10;
@@ -244,8 +244,8 @@
             })
             .attr("dy",".35em")
             .on("click", function(d) {
-               var bar_data = document.getElementById("#bar_data");
-               bar_data.innerText(JSON.stringify(d));
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(d);
             });
         
         // y axis label text
@@ -278,8 +278,8 @@
             })
             .attr("dy",".35em")
             .on("click", function(d) {
-               var bar_data = document.getElementById("#bar_data");
-               bar_data.innerText(JSON.stringify(d));
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(d);
             });
 
         // x axis
@@ -308,8 +308,8 @@
             .attr("width", width/4)
             .attr("height", Math.abs(width/10-padding))
             .on("click", function() {
-               var center_data = document.getElementById("#bar_data");
-               center_data.innerText(JSON.stringify(center_data));
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(center_data);
             });
       
         // center rect text
@@ -327,8 +327,8 @@
             .style("font-size", centerTextFontSize)
             .text(center_data.label)
             .on("click", function() {
-               var center_data = document.getElementById("#bar_data");
-               center_data.innerText(JSON.stringify(center_data));
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(center_data);
             });
 
         centerText.append("text")
@@ -339,8 +339,8 @@
             .style("font-size", centerTextFontSize)
             .text(center_data.text)
             .on("click", function() {
-               var center_data = document.getElementById("#bar_data");
-               center_data.innerText(JSON.stringify(center_data));
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(center_data);
             });
 
         function type(d) {
