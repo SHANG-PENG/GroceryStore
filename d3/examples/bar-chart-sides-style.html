@@ -117,13 +117,13 @@
            {label:'A',value:'100', text:'$100.00'},
            {label:'B',value:'400', text:'$400.00'},
            {label:'C',value:'200', text:'$200.00'},
-           {label:'D',value:'100', text:'$100.00'},
+           {label:'D',value:'10', text:'$10.00'},
            {label:'E',value:'-200', text:'-$200.00'},
            {label:'F',value:'100', text:'$100.00'},
-           {label:'G',value:'-100', text:'-$100.00'},];
+           {label:'G',value:'-10', text:'-$10.00'},];
 
         var center_data = {
-            label:'Total',value:'700', text:'$700.00'
+            label:'Total',value:'600', text:'$600.00'
         };
        
         var margin = {top: 30, right: 60, bottom: 40, left: 60},
@@ -179,7 +179,7 @@
                 }
             })
             .attr("y", function(d) { 
-                return y(d.label); 
+                return (y(d.label) - 5); 
             })
             .attr("rx","5")
             .attr("ry","5")
@@ -208,39 +208,47 @@
                  let barWidth = Math.abs(x(d.value) - x(0));
                  // get current text length
                  var barTextLength = this.getComputedTextLength();
-
-                 if(barTextLength >= barWidth){
-                     if(d.value >= 0){
+                 
+                 if(d.value > 0){
+                     if((barTextLength + 5) > barWidth){
                          return "sidesbar-text sidesbar-text-positive";
                      }else{
+                         return "sidesbar-text";
+                     }
+                 }else if(d.value < 0){
+                     if((barTextLength + 5) > barWidth){
                          return "sidesbar-text sidesbar-text-negative";
+                     }else{
+                         return "sidesbar-text";
                      }
                  }else{
-                     return "sidesbar-text";
+                     return "sidesbar-text sidesbar-text-positive";
                  }
              })
              .style("font-size", barsTextFontSize)
              .attr("x",function(d){
 
                  let barWidth = Math.abs(x(d.value) - x(0));
-                 var barTextLength = this.getComputedTextLength();
+                 var barTextLength = this.getComputedTextLength() + 10;// this barTextLength not equal last barTaxtLenght
 
-                 if(d.value >= 0){
-                     if(barTextLength >= barWidth){
+                  if(d.value > 0){
+                     if((barTextLength + 5) > barWidth){
                          return x(Math.min(0, d.value)) + barWidth + 10;
                      }else{
-                         return x(Math.min(0, d.value)) + barWidth - (barTextLength + 5);
+                         return x(Math.min(0, d.value)) + barWidth - barTextLength + 5;
                      }
-                 }else{
-                     if(barTextLength >= barWidth){
-                         return x(Math.min(0, d.value)) - barTextLength - 10;
+                 }else if(d.value < 0){
+                     if((barTextLength + 5) > barWidth){
+                         return x(Math.min(0, d.value)) - barTextLength;
                      }else{
                          return x(Math.min(0, d.value)) + 5;
                      }
+                 }else{
+                     return x(Math.min(0, d.value)) + barWidth + 5;
                  }
              })
             .attr("y",function(d){
-                return y(d.label) + Math.abs(y.rangeBand())/2;
+                return (y(d.label) - 5) + Math.abs(y.rangeBand())/2;
             })
             .attr("dy",".35em")
             .on("click", function(d) {
@@ -274,7 +282,7 @@
                  }
              })
             .attr("y",function(d){
-                return y(d.label) + Math.abs(y.rangeBand())/2;
+                return (y(d.label) - 5) + Math.abs(y.rangeBand())/2;
             })
             .attr("dy",".35em")
             .on("click", function(d) {
