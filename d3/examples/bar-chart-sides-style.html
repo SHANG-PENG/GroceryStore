@@ -114,16 +114,30 @@
     <script type="text/javascript">
        
        var data = [
-           {label:'A',value:'100', text:'$100.00'},
-           {label:'B',value:'400', text:'$400.00'},
-           {label:'C',value:'200', text:'$200.00'},
-           {label:'D',value:'10', text:'$10.00'},
-           {label:'E',value:'-200', text:'-$200.00'},
-           {label:'F',value:'100', text:'$100.00'},
-           {label:'G',value:'-10', text:'-$10.00'},];
+           {label:'A',value:'10000', text:'$10000.00'},
+           {label:'B',value:'40000', text:'$40000.00'},
+           {label:'C',value:'20000', text:'$20000.00'},
+           {label:'D',value:'1000', text:'$1000.00'},
+           {label:'E',value:'-20000', text:'-$20000.00'},
+           {label:'F',value:'10000', text:'$10000.00'},
+           {label:'G',value:'-1000', text:'-$1000.00'},
+           {label:'H',value:'10000', text:'$10000.00'},
+           {label:'I',value:'40000', text:'$40000.00'},
+           {label:'J',value:'20000', text:'$20000.00'},
+           {label:'K',value:'1000', text:'$1000.00'},
+           {label:'L',value:'-20000', text:'-$20000.00'},
+           {label:'M',value:'10000', text:'$10000.00'},
+           {label:'N',value:'-1000', text:'-$1000.00'},
+           {label:'O',value:'10000', text:'$10000.00'},
+           {label:'P',value:'40000', text:'$40000.00'},
+           {label:'Q',value:'20000', text:'$20000.00'},
+           {label:'R',value:'1000', text:'$1000.00'},
+           {label:'S',value:'-20000', text:'-$20000.00'},
+           {label:'T',value:'10000', text:'$10000.00'},
+           {label:'U',value:'-1000', text:'-$1000.00'}];
 
         var center_data = {
-            label:'Total',value:'600', text:'$600.00'
+            label:'Total',value:'180000', text:'$180000.00'
         };
        
         var margin = {top: 30, right: 60, bottom: 40, left: 60},
@@ -295,7 +309,28 @@
             .attr("class", "sidesbar-axis-x")
             .style("font-size", 12)
             .attr("transform", "translate(0," + (height - padding) + ")")
-            .call(xAxis);
+            .call(xAxis)
+            // add rotate style for the x-axis label
+            .selectAll("text")
+            .attr("dx", function(d){
+                if(d > 0){
+                    return "2em";
+                }else if( d< 0){
+                    return "-2em";
+                }else{
+                    return "0";
+                }
+            })
+            .attr("dy", "1em")
+            .attr("transform", function(d){
+                if(d > 0){
+                    return "rotate(45)";
+                }else if( d< 0){
+                    return "rotate(-45)";
+                }else{
+                    return "rotate(0)";
+                }
+            });
 
         // y axis
         svg.append("g")
@@ -310,7 +345,7 @@
             .attr("class","sidesbar-center")
             .append("rect")
             .attr("x", width * 0.375)
-            .attr("y", height+10)
+            .attr("y", height + 15)
             .attr("rx", 20)
             .attr("ry", 20)
             .attr("width", width/4)
