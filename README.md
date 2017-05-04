@@ -13,4 +13,5 @@ Grocery Store
 
 ### bar-charts ###
 1.bar-chart-sides-style
+2.bar-chart-sides-style2
 
