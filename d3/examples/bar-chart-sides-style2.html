@@ -16,39 +16,35 @@
         }
 
         .sidesbar.positive {
-        fill: #0054a6;
+            fill: #0054a6;
         }
 
         .sidesbar.negative {
-        fill: #9e0b0f;
+            fill: #9e0b0f;
         }
 
         .sidesbar-axis text {
-        font: 10px sans-serif;
+            font: 10px sans-serif;
         }
 
         .sidesbar-axis path,
         .sidesbar-axis line {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
+            fill: #000;
         }
 
         .sidesbar-axis-x {
-        fill: none;
-        stroke: #000;
-        font-size:12px;
+            fill: none;
+            stroke: #000;
+            font-size:8px;
         }
 
         .sidesbar-axis-y {
-        fill: none;
-        stroke: #000;
+            fill: none;
+            stroke: #000;
         }
 
         .sidesbar-text {
-            fill: none;
-            stroke: #fff;
-            /*stroke-width: 1;*/
+            fill: #fff;
         }
 
         .sidesbar-text:hover, .sidesbar-text:active {
@@ -56,14 +52,11 @@
         }
 
         .sidesbar-text-positive {
-            fill: none;
-            stroke: #0054a6;
-            /*stroke-width:1;*/
+            fill: #0054a6;
         }
 
         .sidesbar-text-negative {
-            fill: none;
-            stroke: #9e0b0f;
+            fill: #9e0b0f;
             /*stroke-width:1;*/
         }
 
@@ -77,15 +70,16 @@
         }
 
         .sidesbar-y-axis-text-positive {
-            fill: none;
-            stroke: #0054a6;
-            /*stroke-width:1;*/
+            fill: #0054a6;
         }
 
         .sidesbar-y-axis-text-negative {
-            fill: none;
-            stroke: #9e0b0f;
-            /*stroke-width:1;*/
+            fill: #9e0b0f;
+        }
+
+        .sidesbar-y-axis-sub-text {
+            font-style: italic;
+            font-weight:600;
         }
 
         .sidesbar-center {
@@ -103,7 +97,6 @@
         .sidesbar-center-text {
             font-size:16px;
             fill:#fff;
-            stroke:#fff;
         }
     </style>
 </head>
@@ -114,7 +107,7 @@
     <script type="text/javascript">
     
        var data = [
-           {index:'0',label:'A',label2:'(Inclusive a:$100.00)',value:'10000', text:'$10000.00'},
+           {index:'0',label:'A',label2:'(Inclusive a: $100.00)',value:'10000', text:'$10000.00'},
            {index:'1',label:'B',value:'40000', text:'$40000.00'},
            {index:'2',label:'C',value:'20000', text:'$20000.00'},
            {index:'3',label:'D',value:'1000', text:'$1000.00'},
@@ -345,9 +338,9 @@
                     
                     if(_label1 && _label2){
                         if(i == 0){
-                            return "-0.15em";
+                            return "-0.125em";
                         }else if(i == 1){
-                            return "1.05em";
+                            return "1.125em";
                         }
                     }else{
                         return "0.35em";
@@ -368,6 +361,11 @@
                     return yAxisLabelFontSize;
                 }else if(i == 1){// second label's font-size
                     return sub_yAxisLabelFontSize;
+                }
+            })
+            .attr("class",function(d,i){
+                if(i == 1){
+                    return "sidesbar-y-axis-sub-text";
                 }
             })
             .text(function(d,i){  
