@@ -168,17 +168,27 @@
                 let label2 = d.data.label2;
                 let label3 = d.data.label3;
                 
+                let label_count = 0;
                 if(legend_dy_right <= legend_dy_limit){
                     if(label1 && (label1 !== null) && (label1.length > 0)){
                         legend_dy_right += 12;
+                        label_count +=1;
                     }
 
                     if(label2 && (label2 !== null) && (label2.length > 0)){
                         legend_dy_right += 12;
+                        label_count +=1;
                     }
 
                     if(label3 && (label3 !== null) && (label3.length > 0)){
                         legend_dy_right += 12;
+                        label_count +=1;
+                    }
+                    
+                    if(label_count == 1){
+                        legend_dy_right += 12 * 2;    
+                    }else if(label_count == 2){
+                        legend_dy_right += 12;    
                     }
                     legend_dy_right += 20;
                     return "translate(" + legend_dx_right + "," + legend_dy_right + ")";
@@ -193,6 +203,12 @@
 
                     if(label3 && (label3 !== null) && (label3.length > 0)){
                         legend_dy_left += 12;
+                    }
+                    
+                    if(label_count == 1){
+                        legend_dy_right += 12 * 2;    
+                    }else if(label_count == 2){
+                        legend_dy_right += 12;    
                     }
                     legend_dy_left += 20;// padding
                     return "translate(" + legend_dx_left + "," + legend_dy_left + ")";

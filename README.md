@@ -7,8 +7,9 @@ Grocery Store
 1. donut-chart
 2. donut-chart-animate
 3. donut-chart-legend
-4. donut-chart-center-style
-5. donut-chart-percentage
+4. donut-chart-legend2
+5. donut-chart-center-style
+6. donut-chart-percentage
 
 
 ### bar-charts ###
