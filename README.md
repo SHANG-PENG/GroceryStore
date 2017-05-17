@@ -13,6 +13,7 @@ Grocery Store
 
 
 ### bar-charts ###
-1. bar-chart-sides-style
-2. bar-chart-sides-style2
+1. bar-chart-item
+2. bar-chart-sides-style
+3. bar-chart-sides-style2
 

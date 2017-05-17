@@ -51,7 +51,6 @@
     </table>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript">
-
    
         var max_value = 300;
         var value = -160;
@@ -69,6 +68,27 @@
             .attr("height", height);
         
         var barWidth = (Math.abs(value)/ Math.abs(max_value)) * width;
+ 
+        svg.append("rect")
+            .style("fill", function(){
+                if(value >= 0){
+                    return positive_color;
+                }else{
+                    return negative_color;
+                }
+            })
+            .attr("x", function(){
+                if(value >= 0){
+                    return 0;
+                }else{
+                    return (width - barWidth);
+                }
+            })
+            .attr("y", 0)
+            .attr("rx", 5)
+            .attr("ry", 5)
+            .attr("width", barWidth)
+            .attr("height", height);
 
         var text = svg.append("text")
             .text("$80,000.00")
@@ -77,18 +97,14 @@
                 var text_width = this.getComputedTextLength();
                 if(value >=0 ){
                     if((text_width + 5) > barWidth){
-                        console.log("text-1-1");
                         return "#fff";
                     }else{
-                        console.log("text-1-2");
                         return positive_color;
                     }
                 }else{
                     if((text_width + 5) > barWidth){
-                        console.log("text-2-1");
                         return negative_color;
                     }else{
-                        console.log("text-2-2");
                         return "#fff";
                     }
                 }
@@ -97,18 +113,14 @@
                 var text_width = this.getComputedTextLength();
                 if(value >= 0){
                     if((text_width + 5) > barWidth){
-                        console.log("x-1-1");
                         return (barWidth + 5);
                     }else{
-                        console.log("x-1-2");
                         return (barWidth - text_width - 5);
                     }
                 }else{
                     if((text_width + 5) > barWidth){
-                        console.log("x-2-1");
                         return width - (barWidth + 5);
                     }else{
-                        console.log("x-2-2");
                         return width - (barWidth - text_width - 5);
                     }
                 }
@@ -140,30 +152,9 @@
             //         }
             //     }
             // });
-        
-        svg.append("rect")
-            .style("fill", function(){
-                if(value >= 0){
-                    return positive_color;
-                }else{
-                    return negative_color;
-                }
-            })
-            .attr("x", function(){
-                if(value >= 0){
-                    return 0;
-                }else{
-                    return (width - barWidth);
-                }
-            })
-            .attr("y", 0)
-            .attr("rx", 5)
-            .attr("ry", 5)
-            .attr("width", barWidth)
-            .attr("height", height);
+       
     </script>
     <script type="text/javascript">
-
    
         var max_value = 200;
         var value = 6;
@@ -180,28 +171,43 @@
             .attr("height", height);
         
         var barWidth = (Math.abs(value)/ Math.abs(max_value)) * width;
-                console.log("barWidth: "+ barWidth);
+
+        svg.append("rect")
+            .style("fill", function(){
+                if(value >= 0){
+                    return positive_color;
+                }else{
+                    return negative_color;
+                }
+            })
+            .attr("x", function(){
+                if(value >= 0){
+                    return 0;
+                }else{
+                    return (width - barWidth);
+                }
+            })
+            .attr("y", 0)
+            .attr("rx", 5)
+            .attr("ry", 5)
+            .attr("width", barWidth)
+            .attr("height", height);
 
         var text = svg.append("text")
             .text("$2,000.00")
             .style("font-size", 10)
             .attr("x", function(){
                 var text_width = this.getComputedTextLength();
-                console.log("text-width: "+ text_width);
                 if(value >= 0){
                     if((text_width + 5) > barWidth){
-                        console.log("2x-1-1");
                         return (barWidth + 5);
                     }else{
-                        console.log("2x-1-2");
                         return (barWidth - text_width - 5);
                     }
                 }else{
                     if((text_width + 5) > barWidth){
-                        console.log("2x-2-1");
                         return width - (barWidth + 5);
                     }else{
-                        console.log("2x-2-2");
                         return width - (barWidth - text_width - 5);
                     }
                 }
@@ -221,18 +227,14 @@
                 var text_width = this.getComputedTextLength();
                 if(value >=0 ){
                     if((text_width + barWidth + 5) > width){
-                        console.log("2text-1-1");
                         return "#fff";
                     }else{
-                        console.log("2text-1-2");
                         return positive_color;
                     }
                 }else{
                     if((text_width + barWidth + 5) > width){
-                        console.log("2text-2-1");
                         return "#fff";
                     }else{
-                        console.log("2text-2-2");
                         return negative_color;
                     }
                 }
@@ -254,26 +256,6 @@
             //     }
             // });
         
-        svg.append("rect")
-            .style("fill", function(){
-                if(value >= 0){
-                    return positive_color;
-                }else{
-                    return negative_color;
-                }
-            })
-            .attr("x", function(){
-                if(value >= 0){
-                    return 0;
-                }else{
-                    return (width - barWidth);
-                }
-            })
-            .attr("y", 0)
-            .attr("rx", 5)
-            .attr("ry", 5)
-            .attr("width", barWidth)
-            .attr("height", height);
     </script>
 </body>
 </html>
