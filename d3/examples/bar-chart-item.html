@@ -53,57 +53,63 @@
     <script type="text/javascript">
    
         var max_value = 300;
-        var value = -160;
-        var text = "";
+        var value = -2;
+        var text = "$80.000.00";
        
-        var width = 300,
-            height = 30;
+        var _width = 300,
+            _height = 30;
 
-        var positive_color = "#0054a6";
-        var negative_color = "#9e0b0f";
+        var bar_align = "right";
+
+        var bar_color = "#9e0b0f";
+        // if(color && color !=null  && color.length>0){
+        //     bar_color = color;
+        // }else{
+        //     if(bar_align == "left"){
+        //         bar_color = "#0054a6";
+        //     }else{
+        //         bar_color = "#9e0b0f";
+        //     }
+        // }
 
         var svg = d3.select("#container")
             .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            .attr("width", _width)
+            .attr("height", _height);
         
-        var barWidth = (Math.abs(value)/ Math.abs(max_value)) * width;
- 
+        var bar_width = (Math.abs(value)/ Math.abs(max_value)) * _width;
+      
+        // add bar
         svg.append("rect")
-            .style("fill", function(){
-                if(value >= 0){
-                    return positive_color;
-                }else{
-                    return negative_color;
-                }
-            })
+            .style("fill", bar_color)
             .attr("x", function(){
-                if(value >= 0){
+                if(bar_align == "left"){
                     return 0;
                 }else{
-                    return (width - barWidth);
+                    return (_width - bar_width);
                 }
             })
             .attr("y", 0)
             .attr("rx", 5)
             .attr("ry", 5)
-            .attr("width", barWidth)
-            .attr("height", height);
-
-        var text = svg.append("text")
-            .text("$80,000.00")
-            .style("font-size", 10)
-            .attr("fill", function(){
+            .attr("width", bar_width)
+            .attr("height", _height);
+        
+        // add text
+        var bar_text = svg.append("text")
+            .text(text);
+            //.style("font-size", 10)
+            bar_text.attr("fill", function(){
                 var text_width = this.getComputedTextLength();
-                if(value >=0 ){
-                    if((text_width + 5) > barWidth){
-                        return "#fff";
+                if(bar_align =="left"){
+                    if((text_width + 5) > bar_width){
+                        return bar_color;
                     }else{
-                        return positive_color;
+                        return "#fff";
                     }
                 }else{
-                    if((text_width + 5) > barWidth){
-                        return negative_color;
+                    if((text_width + 5) > bar_width){
+                        return bar_color;
                     }else{
                         return "#fff";
                     }
@@ -111,17 +117,22 @@
             })
             .attr("x", function(){
                 var text_width = this.getComputedTextLength();
-                if(value >= 0){
-                    if((text_width + 5) > barWidth){
-                        return (barWidth + 5);
+                console.log("id: container, text_width: " + text_width);
+                if(bar_align =="left"){
+                    if((text_width + 5) > bar_width){
+                        console.log("x_left_1");
+                        return (bar_width + 5);
                     }else{
-                        return (barWidth - text_width - 5);
+                        console.log("x_left_0");
+                        return (bar_width - text_width + 5);
                     }
                 }else{
-                    if((text_width + 5) > barWidth){
-                        return width - (barWidth + 5);
+                    if((text_width + 5) > bar_width){
+                        console.log("x_rignt_1");
+                        return _width - (bar_width + text_width + 5);
                     }else{
-                        return width - (barWidth - text_width - 5);
+                        console.log("x_right_0");
+                        return _width - (bar_width - 5);
                     }
                 }
             })
@@ -129,86 +140,108 @@
                 return 14;
             })
             .attr("dy",".35em")
+            //.attr("text-anchor", "left");
             .attr("text-anchor", function(){
-                if(value >= 0){
-                    return "start";
+                var text_width = this.getComputedTextLength();
+                if( bar_align == "left"){
+                    if(text_width == 0){
+                        return "start";
+                    }else{
+                        return "end";
+                    }
                 }else{
-                    return "end";
+                    if(text_width == 0){
+                        return "end";
+                    }else{
+                        return "start";
+                    }
                 }
             });
-            // .attr("class",function(){
-            //     var text_width = this.getComputedTextLength();
-            //     if(value >= 0){
-            //         if((text_width + barWidth + 5) > width){
-            //             return "text-reg";
-            //         }else{
-            //             return "text-reg text-positive";
-            //         }
-            //     }else{
-            //         if((text_width + barWidth + 5) > width){
-            //             return "text-negative";
-            //         }else{
-            //             return "text-reg text-negative";
-            //         }
-            //     }
-            // });
        
     </script>
     <script type="text/javascript">
    
-        var max_value = 200;
-        var value = 6;
-       
-        var width = 300,
-            height = 30;
+       var max_value = 300;
+        var value = 200;
+        var text = "$99,000.00";
 
-        var positive_color = "#0054a6";
-        var negative_color = "#9e0b0f";
+        var _width = 300,
+            _height = 30;
+
+        var bar_align ="left";
+
+        var bar_color = "#0054a6";
+        // if(color && color !=null  && color.length>0){
+        //     bar_color = color;
+        // }else{
+        //     if(bar_align == "left"){
+        //         bar_color = "#0054a6";
+        //     }else{
+        //         bar_color = "#9e0b0f";
+        //     }
+        // }
 
         var svg = d3.select("#container2")
             .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+            .attr("width", _width)
+            .attr("height", _height);
         
-        var barWidth = (Math.abs(value)/ Math.abs(max_value)) * width;
-
+        var bar_width = (Math.abs(value)/ Math.abs(max_value)) * _width;
+      
+        // add bar
         svg.append("rect")
-            .style("fill", function(){
-                if(value >= 0){
-                    return positive_color;
-                }else{
-                    return negative_color;
-                }
-            })
+            .style("fill", bar_color)
             .attr("x", function(){
-                if(value >= 0){
+                if(bar_align == "left"){
                     return 0;
                 }else{
-                    return (width - barWidth);
+                    return (_width - bar_width);
                 }
             })
             .attr("y", 0)
             .attr("rx", 5)
             .attr("ry", 5)
-            .attr("width", barWidth)
-            .attr("height", height);
-
-        var text = svg.append("text")
-            .text("$2,000.00")
-            .style("font-size", 10)
-            .attr("x", function(){
+            .attr("width", bar_width)
+            .attr("height", _height);
+        
+        // add text
+        var bar_text = svg.append("text")
+            .text(text);
+            //.style("font-size", 10)
+            bar_text.attr("fill", function(){
                 var text_width = this.getComputedTextLength();
-                if(value >= 0){
-                    if((text_width + 5) > barWidth){
-                        return (barWidth + 5);
+                if(bar_align =="left"){
+                    if((text_width + 5) > bar_width){
+                        return bar_color;
                     }else{
-                        return (barWidth - text_width - 5);
+                        return "#fff";
                     }
                 }else{
-                    if((text_width + 5) > barWidth){
-                        return width - (barWidth + 5);
+                    if((text_width + 5) > bar_width){
+                        return bar_color;
                     }else{
-                        return width - (barWidth - text_width - 5);
+                        return "#fff";
+                    }
+                }
+            })
+            .attr("x", function(){
+                var text_width = this.getComputedTextLength();
+                console.log("id: container2, text_width: " + text_width);
+                if(bar_align =="left"){
+                    if((text_width + 5) > bar_width){
+                        console.log("x_left_1");
+                        return (bar_width + 5);
+                    }else{
+                        return (bar_width - text_width - 5);
+                        console.log("x_left_0");
+                    }
+                }else{
+                    if((text_width + 5) > bar_width){
+                        console.log("x_rignt_1");
+                        return _width - (bar_width + text_width + 5);
+                    }else{
+                        console.log("x_right_0");
+                        return _width - (bar_width - 5);
                     }
                 }
             })
@@ -216,43 +249,12 @@
                 return 14;
             })
             .attr("dy",".35em")
-            .attr("text-anchor", function(){
-                if(value >= 0){
-                    return "start";
-                }else{
-                    return "end";
-                }
-            })
-            .attr("fill", function(){
-                var text_width = this.getComputedTextLength();
-                if(value >=0 ){
-                    if((text_width + barWidth + 5) > width){
-                        return "#fff";
-                    }else{
-                        return positive_color;
-                    }
-                }else{
-                    if((text_width + barWidth + 5) > width){
-                        return "#fff";
-                    }else{
-                        return negative_color;
-                    }
-                }
-            });
-            // .attr("class",function(){
-            //     var text_width = this.getComputedTextLength();
-            //     if(value >= 0){
-            //         if((text_width + barWidth + 5) > width){
-            //             return "text-reg";
-            //         }else{
-            //             return "text-reg text-positive";
-            //         }
+            .attr("text-anchor", "start");
+            // .attr("text-anchor", function(){
+            //     if( bar_align == "left"){
+            //         return "start";
             //     }else{
-            //         if((text_width + barWidth + 5) > width){
-            //             return "text-negative";
-            //         }else{
-            //             return "text-reg text-negative";
-            //         }
+            //         return "end";
             //     }
             // });
         
