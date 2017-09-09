@@ -1,0 +1,36 @@
+{
+  "MyUI": "http://localhost:8819",
+  "AdminUI": "http://localhost:8819",
+  "StoreUI": "http://localhost:21623",
+  "Api": {
+    "Admin": "http://localhost:3583",
+    "Store": "http://localhost:61179"
+  },
+  "StorageApi": {
+    "Admin": "http://localhost:8014",
+    "Store": "http://localhost:8014",
+    "MasterNode": "http://localhost:8014"
+  },
+  "Redis": {
+    "Admin": "172.28.28.43:6379",
+    "Store": "172.28.28.43:6379",
+    "MasterNode": "172.28.28.43:6379"
+  },
+  "Database": {
+    "Admin": {
+      "Server": "172.28.28.43",
+      "Instance": "AdminCloud",
+      "UserName": "sa",
+      "Password": "pa88word_"
+    }
+  },
+  "Email": {
+    "Host": "smtp.emailsrvr.com",
+    "Port": 587,
+    "NoReply": {
+      "Address": "no-reply@aldelo.com",
+      "Name": "Aldelo, LP - no reply",
+      "Password": "grantMaster2007"
+    }
+  }
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .outer {
+    width: 12000px;
+    height: 600px;
+    overflow: auto;
+}
+.inner {
+    width: 1000px;
+    height:600px;
+}
+#container {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.line {
+    fill: none;
+    stroke: greenyellow;
+    stroke-width: 1.5px;
+}
+.circle {
+    fill: white;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+</style>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+</head>
+<body>
+    <div class="outer">
+    <div class="inner"> 
+        <div class="span4" id="container">
+</div>
+    </div>
+</div>
+
+</body>
+<script>
+    var data=[
+{"name":"0AM","value":"30","value2":"20"},
+{"name":"1AM","value":"40","value2":"32"},
+{"name":"2AM","value":"60","value2":"53"},
+{"name":"3AM","value":"10","value2":"8"},
+{"name":"4AM","value":"80","value2":"50"},
+{"name":"5AM","value":"30","value2":"20"},
+{"name":"6AM","value":"20","value2":"20"},
+{"name":"7AM","value":"40","value2":"36"},
+{"name":"8AM","value":"60","value2":"45"},
+{"name":"9AM","value":"10","value2":"8"},
+{"name":"10AM","value":"80","value2":"30"},
+{"name":"11AM","value":"30","value2":"20"},
+{"name":"12PM","value":"20","value2":"20"},
+{"name":"1PM","value":"40","value2":"30"},
+{"name":"2PM","value":"60","value2":"54"},
+{"name":"3PM","value":"10","value2":"8"},
+{"name":"4pM","value":"80","value2":"60"},
+{"name":"5PM","value":"30","value2":"20"},
+{"name":"6PM","value":"20","value2":"10"},
+{"name":"7PM","value":"40","value2":"3"},
+{"name":"8PM","value":"60","value2":"50"},
+{"name":"9PM","value":"10","value2":"8"},
+{"name":"10PM","value":"80","value2":"70"},
+{"name":"11PM","value":"30","value2":"20"}
+];
+var _width = 1000,
+	_height = 600,
+	radius = 100,
+	padding = 20;
+var margin = {top: 20, right: 20, bottom: 30, left: 50};
+
+var x = d3.scale.ordinal();
+var y = d3.scale.linear();
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(10, "repooooooort");
+
+ var tip = d3.tip()
+     .attr('class', 'd3-tip')
+     .offset([-10, 0])
+     .html(function (d) {
+     return "<strong>"+d.name+"($):</strong> <span style='color:red'>" + d.value + "</span>";
+ })
+
+var svg = d3.select("#container")
+    .append("svg")
+    .attr("viewBox", "0 0 "+ _width +" "+ _height)
+    .attr("width", _width)
+    .attr("height", _height)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+ 
+    svg.call(tip);
+
+	x.domain(data.map(function(d){return d.name;}))
+	.rangeBands([0, _width]);
+
+	y.domain([0,d3.max(data, function(d) { return d.value; })])
+	.range([_height,0]);
+	
+    svg.append("g")
+	.attr("class","x axis")
+	.attr("transform", "translate(0," + _height + ")")
+    .call(xAxis);
+    
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Sales By Monthly Total");
+
+    svg.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("class","bar")
+        .attr("x",function(d){return x(d.name)})
+        .attr("width", x.rangeBand()-5)
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return _height - y(d.value); })
+        .attr("fill","steelblue")
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
+
+    var line = d3.svg.line()
+        .x(function (d) {
+            return x(d.name)+(x.rangeBand()-5)/2;
+         })
+         .y(function (d) {
+            return y(d.value2);
+        });
+
+    svg.append("path")
+        .datum(data)
+        .attr("class","line")
+        .attr("d",line);
+        
+    svg.selectAll(".circle")
+     .data(data)
+     .enter()
+     .append("svg:circle")
+     .attr("class", "circle")
+     .attr("cx", function (d, i) {
+         return x(d.name)+(x.rangeBand()-5)/2;
+    })
+     .attr("cy", function (d, i) {
+        return y(d.value2);
+    })
+     .attr("r", 5)
+     .on('mouseover', tip.show)
+     .on('mouseout', tip.hide);
+</script>
+</html>
