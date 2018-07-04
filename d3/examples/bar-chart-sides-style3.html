@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bar-chart-sides-style-with-sub-label</title>
+    <style>
+        #container{
+            width:100%;
+            height: 100%;
+        }
+        .sidesbar rect{
+            border-radius:20px;
+            -webkit-border-radius:20px;
+        }
+
+        .sidesbar:hover, .sidesbar:active {
+            cursor: pointer;
+        }
+
+        .sidesbar.positive {
+            fill: #0054a6;
+        }
+
+        .sidesbar.negative {
+            fill: #9e0b0f;
+        }
+
+        .sidesbar-axis text {
+            font: 10px sans-serif;
+        }
+
+        .sidesbar-axis path,
+        .sidesbar-axis line {
+            fill: #000;
+        }
+
+        .sidesbar-axis-x {
+            fill: none;
+            stroke: #000;
+            font-size:8px;
+        }
+
+        .sidesbar-axis-y {
+            fill: none;
+            stroke: #000;
+        }
+
+        .sidesbar-text {
+            fill: #fff;
+        }
+
+        .sidesbar-text:hover, .sidesbar-text:active {
+            cursor:pointer;    
+        }
+
+        .sidesbar-text-positive {
+            fill: #0054a6;
+        }
+
+        .sidesbar-text-negative {
+            fill: #9e0b0f;
+            /*stroke-width:1;*/
+        }
+
+        .sidesbar-y-axis-text {
+            fill: none;
+            /*stroke-width:1;*/
+        }
+
+        .sidesbar-y-axis-text:hover, .sidesbar-y-axis-text:active {
+            cursor:pointer;    
+        }
+
+        .sidesbar-y-axis-text-positive {
+            fill: #0054a6;
+        }
+
+        .sidesbar-y-axis-text-negative {
+            fill: #9e0b0f;
+        }
+
+        .sidesbar-y-axis-sub-text {
+            font-style: italic;
+            font-weight:600;
+        }
+
+        .sidesbar-center {
+            fill:#00746b;
+        }
+
+        .sidesbar-center:hover, .sidesbar-center:active {
+            cursor:pointer;    
+        }
+
+        .sidesbar-center-text:hover, .sidesbar-center-text:active {
+            cursor:pointer;    
+        }
+
+        .sidesbar-center-text {
+            font-size:16px;
+            fill:#fff;
+        }
+        
+        .svg-container{
+            display: block;
+            position: relative;
+            width: 100%;
+            padding-bottom: 50%; 
+        }
+
+        .svg-container svg { 
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0; 
+        }
+    </style>
+</head>
+<body>
+    <div id="bar_data"></div>
+    <div id="container"></div>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+    
+    //    var data = [
+    //        {index:'0',label:'A',label2:'(Inclusive a: $100.00)',value:'10000', text:'$10000.00'},
+    //        {index:'1',label:'B',value:'40000', text:'$40000.00'},
+    //        {index:'2',label:'C',value:'20000', text:'$20000.00'},
+    //        {index:'3',label:'D',value:'1000', text:'$1000.00'},
+    //        {index:'4',label:'E',value:'-20000', text:'-$20000.00'},
+    //        {index:'5',label:'F',value:'10000', text:'$10000.00'},
+    //        {index:'6',label:'G',value:'-1000', text:'-$1000.00'},
+    //        {index:'7',label:'H',value:'10000', text:'$10000.00'},
+    //        {index:'8',label:'I',value:'42000', text:'$42000.00'},
+    //        {index:'9',label:'J',value:'20000', text:'$20000.00'},
+    //        {index:'10',label:'K',value:'1000', text:'$1000.00'},
+    //        {index:'11',label:'L',label2:'(l:$-100.00)',value:'-20000', text:'-$20000.00'},
+    //        {index:'12',label:'M',value:'10000', text:'$10000.00'},
+    //        {index:'13',label:'N',value:'-40000', text:'-$40000.00'}];
+    //1=TransferIn; 2=NonPOPurchase; 3=TransferOut; 4=Waste; 5=Lost; 6=Theft; 7=Spoilage; 8=Variance; 9=Returned
+           var data = [
+           {index:'1',label:'Transfer In',value:'40000', text:'$40000.00'},
+           {index:'2',label:'Non PO Purchase',value:'-1000', text:'-$1000'},
+           {index:'3',label:'Transfer Out',value:'-20000', text:'-$20000.00'},
+           {index:'4',label:'Waste',value:'-300', text:'-$300.00'},
+           {index:'5',label:'Lost',value:'-100', text:'-$100.00'},
+           {index:'6',label:'Theft',value:'-1000', text:'-$1000.00'},
+           {index:'7',label:'Spoilage',value:'-700', text:'-$700.00'},
+           {index:'8',label:'Variance',value:'-200', text:'-$200.00'},
+           {index:'9',label:'Returned',value:'-500', text:'-$500.00'}];
+
+           /*
+           ,
+           {index:'5',label:'F',value:'10000', text:'$10000.00'},
+           {index:'6',label:'G',value:'-1000', text:'-$1000.00'},
+           {index:'7',label:'H',value:'10000', text:'$10000.00'},
+           {index:'8',label:'I',value:'40000', text:'$40000.00'},
+           {index:'9',label:'J',value:'20000', text:'$20000.00'},
+           {index:'10',label:'K',value:'1000', text:'$1000.00'},
+           {index:'11',label:'L',label2:'(l:$-100.00)',value:'-20000', text:'-$20000.00'},
+           {index:'12',label:'M',value:'10000', text:'$10000.00'},
+           {index:'13',label:'N',value:'-42000', text:'-$42000.00'},
+           {index:'14',label:'O',value:'10000', text:'$10000.00'},
+           {index:'15',label:'P',value:'40000', text:'$40000.00'},
+           {index:'16',label:'Q',value:'20000', text:'$20000.00'},
+           {index:'17',label:'R',value:'1000', text:'$1000.00'},
+           {index:'18',label:'S',value:'-20000', text:'-$20000.00'},
+           {index:'19',label:'T',value:'10000', text:'$10000.00'},
+           {index:'20',label:'U',value:'-1000', text:'-$1000.00'}
+           */
+
+        var center_data = {
+            label:'Value On Hand',value:'16200', text:'$16200.00'
+        };
+       
+        var margin = {top: 30, right: 60, bottom: 40, left: 10},
+             _width = 1520,
+             _height = 360,
+             bar_height = 40,
+             bar_num = 0,
+             y_height = 0,
+             padding = 10;
+
+        if(data && data.length > 0){
+            bar_num = data.length;
+            y_height += (bar_height + padding) * bar_num;
+            _height += y_height;
+        }
+
+        var x = d3.scale.linear()
+            .range([0, _width-20]);
+
+        var y = d3.scale.ordinal()
+            .rangeRoundBands([0, y_height], .1);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+     
+        var svg = d3.select("#container")
+            .append("svg")
+            .attr("viewBox", "0 0 "+ _width +" "+ _height)
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("width", _width)
+            .attr("height", _height)
+            // .attr("style","border:1px solid red;")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // keep left and right side is the same scale 
+        let max_value = d3.max(data,function(d){
+            return Math.abs(d.value);
+        });
+        
+        //max_value = (max_value > 0)? max_value: max_value * -1;
+
+        x.domain([-max_value, max_value]);
+        y.domain(data.map(function(d) { 
+            return d.label; 
+        }));
+
+        if(bar_num > 0){
+            var bars = svg.selectAll(".sidesbar")
+                .data(data)
+                .enter();
+                
+            bars.append("rect")
+                .attr("class", function(d) { 
+                    return d.value < 0 ? "sidesbar negative" : "sidesbar positive"; 
+                })
+                .attr("x", function(d) { 
+                    if(d.value > 0){
+                        return x(Math.min(0, d.value)) + 5; 
+                    }else if(d.value < 0){
+                        return x(Math.min(0, d.value)) - 5; 
+                    }else{
+                        return x(Math.min(0, d.value)); 
+                    }
+                })
+                .attr("y", function(d) { 
+                    return (y(d.label) - 5); 
+                })
+                .attr("rx","5")
+                .attr("ry","5")
+                .attr("width", function(d) { 
+                    return Math.abs(x(d.value) - x(0)); 
+                })
+                .attr("height",bar_height)
+                .on("click", function(d) {
+                    var bar_data = document.getElementById("bar_data");
+                    bar_data.innerText = JSON.stringify(d);
+                });
+        
+            // bar text
+            //let barsTextFontSize = Math.min(width,height)/48;
+            //barsTextFontSize = (barsTextFontSize <= 10) ? 10 : barsTextFontSize;
+            let barsTextFontSize = 10;
+
+            bars.append("text")
+                .text(function(d){
+                    return d.text;
+                })
+                .attr("class",function(d){
+                    
+                    let barWidth = Math.abs(x(d.value) - x(0));
+                    // get current text length
+                    var barTextLength = this.getComputedTextLength();
+                    
+                    if(d.value > 0){
+                        if((barTextLength + 5) > barWidth){
+                            return "sidesbar-text sidesbar-text-positive";
+                        }else{
+                            return "sidesbar-text";
+                        }
+                    }else if(d.value < 0){
+                        if((barTextLength + 5) > barWidth){
+                            return "sidesbar-text sidesbar-text-negative";
+                        }else{
+                            return "sidesbar-text";
+                        }
+                    }else{
+                        return "sidesbar-text sidesbar-text-positive";
+                    }
+                })
+                .style("font-size", barsTextFontSize)
+                .attr("x",function(d){
+
+                    let barWidth = Math.abs(x(d.value) - x(0));
+                    var barTextLength = this.getComputedTextLength() + 10;// this barTextLength not equal last barTaxtLenght
+
+                    if(d.value > 0){
+                        if((barTextLength + 5) > barWidth){
+                            return x(Math.min(0, d.value)) + barWidth + 10;
+                        }else{
+                            return x(Math.min(0, d.value)) + barWidth - barTextLength + 5;
+                        }
+                    }else if(d.value < 0){
+                        if((barTextLength + 5) > barWidth){
+                            return x(Math.min(0, d.value)) - barTextLength;
+                        }else{
+                            return x(Math.min(0, d.value)) + 5;
+                        }
+                    }else{
+                        return x(Math.min(0, d.value)) + barWidth + 5;
+                    }
+                })
+                .attr("y",function(d){
+                    return (y(d.label) - 5) + Math.abs(y.rangeBand())/2;
+                    //return (y(d.label) + 5) + bar_height/2;
+                })
+                .attr("dy",".35em")
+                .on("click", function(d) {
+                    var bar_data = document.getElementById("bar_data");
+                    bar_data.innerText = JSON.stringify(d);
+                });
+            
+            // y axis label text
+            //let yAxisLabelFontSize = Math.min(width,height)/48;
+            //yAxisLabelFontSize = (yAxisLabelFontSize <= 10)? 10 : yAxisLabelFontSize;
+            let yAxisLabelFontSize = 10;
+            let sub_yAxisLabelFontSize = 8;
+
+            let y_axis_label = bars.append("text")
+                //  .text(function(d){
+                //      return d.label;
+                //  })
+                .attr("class",function(d){
+                    if(d.value >=0){
+                        return "sidesbar-y-axis-text sidesbar-y-axis-text-positive";
+                    }else{
+                        return "sidesbar-y-axis-text sidesbar-y-axis-text-negative";
+                    }
+                })
+                .style("font-size", yAxisLabelFontSize)
+                .attr("x",function(d){
+                    var labelTextLength = this.getComputedTextLength();
+                    if(d.value >= 0){
+                        return _width/2 - labelTextLength - 15;
+                    }else{
+                        return _width/2 - 5;
+                    }
+                })
+                .attr("y",function(d){
+                    return (y(d.label) - 5) + Math.abs(y.rangeBand())/2;
+                })
+                .attr("text-anchor",function(d){
+                    return (d.value>= 0)? "end": "start";
+                })
+                //.attr("dy",".35em")
+                .on("click", function(d) {
+                    var bar_data = document.getElementById("bar_data");
+                    bar_data.innerText = JSON.stringify(d);
+                });
+                
+            // y text-span
+            let y_axis_labels_arr = []
+            
+            // multile text
+            let y_axis_tspan = y_axis_label.selectAll(".sidesbar-y-axis-tspan")
+                .data(function(d,i){
+
+                    let _y_axis_labels = [];
+                    let _label1 = d.label;
+                    let _label2 = d.label2;
+                    
+                    if(_label1 && (_label1 !== null) && (_label1.length > 0)){
+                        // the current index not same as the index which in data
+                        _y_axis_labels.push(i);
+                    }
+                    if(_label2 && (_label2 !== null) && (_label2.length > 0)){
+                        _y_axis_labels.push(i);
+                    }
+                    return _y_axis_labels;
+                })
+                .enter()
+                .append("tspan")
+                .attr("x",function(){
+                    let parent_x = d3.select(this.parentNode).attr("x");
+                    return (parent_x) ? parent_x : -5;
+                })
+                .attr("dy",function(d,i){
+                    
+                    let _index = d;
+                    let _item = data[_index];
+
+                    if(_item){
+                        let _label1 = _item.label;
+                        let _label2 = _item.label2;
+                        
+                        if(_label1 && _label2){
+                            if(i == 0){
+                                return "-0.125em";
+                            }else if(i == 1){
+                                return "1.125em";
+                            }
+                        }else{
+                            return "0.35em";
+                        }
+                    }
+                    // if(labels_len == 1){
+                    //     return "0em";
+                    // }else if (labels_len == 2){
+                    //     if(i == 0){
+                    //         return "-0.35em";
+                    //     }else if( i == 1){
+                    //         return "1em";
+                    //     }
+                    // }
+                })
+                .style("font-size", function(d,i){
+                    if(i == 0){// first label's font-size
+                        return yAxisLabelFontSize;
+                    }else if(i == 1){// second label's font-size
+                        return sub_yAxisLabelFontSize;
+                    }
+                })
+                .attr("class",function(d,i){
+                    if(i == 1){
+                        return "sidesbar-y-axis-sub-text";
+                    }
+                })
+                .text(function(d,i){  
+                    
+                    let _index = d;
+                    let _item = data[_index];
+                    if(_item){
+                        if(i == 0){
+                            return _item.label;
+                        }else if(i == 1){
+                            return _item.label2;
+                        }
+                    }
+                })
+                .on("mousemove",function(d){
+                    y_axis_tspan.style("cursor","pointer");
+                })
+                .on("mouseout",function(d){
+                    y_axis_tspan.style("cursor","default");
+                });
+
+            // y axis
+            svg.append("g")
+                .attr("class", "sidesbar-axis-y")
+                .append("line")
+                .attr("x1", x(0))
+                .attr("x2", x(0))
+                .attr("y2", y_height);
+        }
+
+        let c_bar_width = _width * 0.175;
+        let c_bar_height = c_bar_width * 0.5;
+
+        // center rect
+        svg.append("g")
+            .attr("class","sidesbar-center")
+            .append("rect")
+            .attr("x", (_width - c_bar_width)/2)
+            .attr("y", y_height)
+            .attr("rx", 20)
+            .attr("ry", 20)
+            .attr("width", c_bar_width)
+            .attr("height", c_bar_height)
+            .on("click", function() {
+                var bar_data = document.getElementById("bar_data");
+                bar_data.innerText = JSON.stringify(center_data);
+            });
+
+        // center rect text
+        //let centerTextFontSize = Math.min(width,height)/32;
+        let centerTextFontSize = 12;
+
+        let centerText = svg.append("g")
+            .attr("class","sidesbar-center-text");
+
+        centerText.append("text")
+            .attr("x", _width * 0.5)
+            .attr("y",y_height + c_bar_height/2)
+            .attr("dy","-.75em")
+            .attr("text-anchor","middle")
+            .attr("fill","#fff")
+            .style("font-size", centerTextFontSize)
+            .text(center_data.label)
+            .on("click", function() {
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(center_data);
+            });
+
+        centerText.append("text")
+            .attr("x",_width * 0.5)
+            .attr("y",y_height + c_bar_height/2)
+            .attr("dy",".75em")
+            .attr("text-anchor","middle")
+            .attr("fill","#fff")
+            .style("font-size", centerTextFontSize)
+            .text(center_data.text)
+            .on("click", function() {
+               var bar_data = document.getElementById("bar_data");
+               bar_data.innerText = JSON.stringify(center_data);
+            });
+
+    </script>
+</body>
+</html>
