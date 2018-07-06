@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>donut-chart-percentage</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+       
+       var percent = 80;
+       var data = [100, 0];
+
+       var percent1 = 80;
+       var data1 = [percent1, 100-percent1];
+       
+       var percent2 = 65;
+       var data2 = [percent2, 100-percent2];
+       
+       var percent3 = 50;
+       var data3 = [percent3, 100-percent3];
+
+        var width = 600,
+            height = 300,
+            radius = Math.min(width, height) / 2,
+            inner_radius = radius * 0.65,
+            outer_radius = radius * 0.8;
+
+        var colors = d3.scale.category10();
+        var percentage_color = "#ebebeb";
+        var backgroud_color = "#ebebeb";
+        
+        var percentage_color1 = "#72F1BF" || colors(1);
+        var backgroud_color1 = "#ebebeb";
+
+        var percentage_color2 = "#38D7FB" || colors(2);
+        var backgroud_color2 = "#fff";
+
+        var percentage_color3 = "#FFD44C" || colors(3);
+        var backgroud_color3 = "#fff";
+
+        var arcText = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .1, .3);
+
+        var arc = d3.svg.arc()
+            .innerRadius(inner_radius)
+            .outerRadius(outer_radius)
+            // .padAngle(.02)
+            // .padRadius(4)
+            .cornerRadius(50);
+
+        var arc1 = d3.svg.arc()
+            .innerRadius(inner_radius)
+            .outerRadius(outer_radius)
+            // .padAngle(.02)
+            // .padRadius(4)
+            .cornerRadius(50);
+
+        var arc2 = d3.svg.arc()
+            .innerRadius(radius * 0.5)
+            .outerRadius(radius * 0.65)
+            // .padAngle(.02)
+            // .padRadius(4)
+            .cornerRadius(50);
+                  
+        var arc3 = d3.svg.arc()
+            .innerRadius(radius * 0.35)
+            .outerRadius(radius * 0.5)
+            // .padAngle(.02)
+            // .padRadius(4)
+            .cornerRadius(50);
+
+        var pie = d3.layout.pie()
+            .value(function(d) {
+                return d;
+            })
+            .sort(null);
+
+        var donut_svg = d3.select("#container")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height) 
+
+        var svg = donut_svg
+            .append("g")
+            .attr("transform", "translate(" + radius * 2 + "," + radius + ")");
+
+        var path = svg.selectAll(".donut-chart-arc")
+            .data(pie([0,100]))
+            .enter()
+            .append("g")
+            .attr("class", "arc")
+            .append("path")
+            .attr("d", arc)
+            .attr("fill", function(d, i) {
+                if(i==0){
+                    return percentage_color;
+                }
+                return backgroud_color;
+            })
+            .each(function(d){
+                this._currentArc = d;
+            });
+
+        var path1 = svg.selectAll(".donut-chart-arc")
+            .data(pie([0,100]))
+            .enter()
+            .append("g")
+            .attr("class", "arc")
+            .append("path")
+            .attr("d", arc1)
+            .attr("fill", function(d, i) {
+                if(i==0){
+                    return percentage_color1;
+                }
+                return backgroud_color1;
+            })
+            .each(function(d){
+                this._currentArc = d;
+            });
+            
+        var path2 = svg.selectAll(".donut-chart-arc")
+            .data(pie([0,100]))
+            .enter()
+            .append("g")
+            .attr("class", "arc")
+            .append("path")
+            .attr("d", arc2)
+            .attr("fill", function(d, i) {
+                if(i==0){
+                    return percentage_color2;
+                }
+                return backgroud_color2;
+            })
+            .each(function(d){
+                this._currentArc = d;
+            });
+               
+        var path3 = svg.selectAll(".donut-chart-arc")
+            .data(pie([0,100]))
+            .enter()
+            .append("g")
+            .attr("class", "arc")
+            .append("path")
+            .attr("d", arc2)
+            .attr("fill", function(d, i) {
+                if(i==0){
+                    return percentage_color3;
+                }
+                return backgroud_color3;
+            })
+            .each(function(d){
+                this._currentArc = d;
+            });
+        
+        var center_text = svg.append("text")
+            .attr("text-anchor","middle")
+            .attr("dy",".35em")
+            .attr("d", percent)
+            .text(percent);
+        
+        var _this = this;
+        
+        path.data(pie(data))
+            .transition()
+            .duration(1500)
+            .ease("exp")
+            .attrTween("d",function(d){
+                var progress = 0;
+                var format = d3.format(".2f");
+                var i = d3.interpolate(this._currentArc, d);
+                var i2 = d3.interpolate(0, 100);
+
+                this._currentArc = i(0);
+                var _this2 = this;
+                return function(t){
+                    center_text.text(format(i2(t)) + "%");
+                    return arc(i(t));
+                };
+            });
+
+        path1.data(pie(data1))
+            .transition()
+            .duration(1500)
+            .ease("exp")
+            .attrTween("d",function(d){
+                var progress = 0;
+                var format = d3.format(".2f");
+                var i = d3.interpolate(this._currentArc, d);
+                var i2 = d3.interpolate(0, percent);
+
+                this._currentArc = i(0);
+                var _this2 = this;
+                return function(t){
+                    center_text.text(format(i2(t)) + "%");
+                    return arc1(i(t));
+                };
+            });
+            
+        path2.data(pie(data2))
+            .transition()
+            .duration(1500)
+            .ease("exp")
+            .attrTween("d",function(d){
+                var progress = 0;
+                var format = d3.format(".2f");
+                var i = d3.interpolate(this._currentArc, d);
+                var i2 = d3.interpolate(0, percent);
+
+                this._currentArc = i(0);
+                var _this2 = this;
+                return function(t){
+                    center_text.text(format(i2(t)) + "%");
+                    return arc2(i(t));
+                };
+            });
+            
+        path3.data(pie(data3))
+            .transition()
+            .duration(1500)
+            .ease("exp")
+            .attrTween("d",function(d){
+                var progress = 0;
+                var format = d3.format(".2f");
+                var i = d3.interpolate(this._currentArc, d);
+                var i2 = d3.interpolate(0, percent);
+
+                this._currentArc = i(0);
+                var _this2 = this;
+                return function(t){
+                    center_text.text(format(i2(t)) + "%");
+                    return arc3(i(t));
+                };
+            });
+
+            
+       /*let path = g.selectAll('path').data(pieData).enter().append('path')
+      .attr('d', function (d, i) {
+        return me.cerateArc(me.r, me.R, d.startAngle - Math.asin((me.R - me.r) / (me.R + me.r)), d.endAngle + Math.asin((me.R - me.r) / (me.R + me.r)))
+      })*/
+
+    </script>
+</body>
+</html>
