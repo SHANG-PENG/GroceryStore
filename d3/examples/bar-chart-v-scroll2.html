@@ -125,7 +125,7 @@
 // 			,{"label":"11 PM", "group":"2014",value:10}];
 
 
-var data =[{"label":"Week 1", "group":"2014", value:100},{"label":"Week 2", "group":"2014", value:130},{"label":"Week 3", "group":"2014", value:10},{"label":"Week 4", "group":"2014", value:700},{"label":"Week 5", "group":"2014", value:100}
+var data =[{"label":"Week 1", "group":"2014", value:100000000},{"label":"Week 2", "group":"2014", value:130000000},{"label":"Week 3", "group":"2014", value:10},{"label":"Week 4", "group":"2014", value:700},{"label":"Week 5", "group":"2014", value:100000000}
 ,{"label":"Week 6", "group":"2014", value:300},{"label":"Week 7", "group":"2014", value:400},{"label":"Week 8", "group":"2014", value:120},{"label":"Week 9", "group":"2014", value:400},{"label":"Week 10", "group":"2014", value:100},
 {"label":"Week 11", "group":"2014", value:200},{"label":"Week 12", "group":"2014", value:100},{"label":"Week 13", "group":"2014", value:600},{"label":"Week 14", "group":"2014", value:800},{"label":"Week 15", "group":"2014", value:120},
 {"label":"Week 16", "group":"2014", value:100},{"label":"Week 17", "group":"2014", value:300},{"label":"Week 18", "group":"2014", value:100},
@@ -172,11 +172,11 @@ var data =[{"label":"Week 1", "group":"2014", value:100},{"label":"Week 2", "gro
 			.attr("transform", "translate(" + (-mini_y_width) + ", 0)")
 			.call(main_yAxis)
 			.append("text")
-			.attr("transform", "rotate(-90), translate(" + -(main_height / 2) + ", " + -(mini_y_width + main_margin.left - 20) + ")")
+			.attr("transform", "rotate(0), translate(" + (mini_x_width/2) + ", " + (mini_y_height + 64) + ")")
 			.attr("dy", ".71em")
 			.style("text-anchor", "middle")
             .style("font-size","12px")
-			.text("value");
+			.text("Total: $3,000.00");
 
 		var x_arc = d3.svg.arc()
 		.outerRadius(mini_x_height / 2)

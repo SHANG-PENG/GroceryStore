@@ -17,20 +17,32 @@
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script type="text/javascript">
        
-       var data = [
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'A'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'B'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'C'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'D'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'E'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'F'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'G'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'H'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'I'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'J'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'K'},
-           {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'L'}];
-       
+    //    var data = [
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'A'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'B'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'C'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'D'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'E'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'F'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'G'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'H'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'I'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'J'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'K'},
+    //        {value:'100',label1:'$100.00', label2:'avg:100.00',label3:'L'}];
+
+  
+           var data = [
+           {index:'1',label1:'Transfer In',value:'40000', label2:'$40000.00'},
+           {index:'2',label1:'Non PO Purchase',value:'-1000', label2:'-$1000'},
+           {index:'3',label1:'Transfer Out',value:'-20000', label2:'-$20000.00'},
+           {index:'4',label1:'Waste',value:'-300', label2:'-$300.00'},
+           {index:'5',label1:'Lost',value:'-100', label2:'-$100.00'},
+           {index:'6',label1:'Theft',value:'-1000', label2:'-$1000.00'},
+           {index:'7',label1:'Spoilage',value:'-700', label2:'-$700.00'},
+           {index:'8',label1:'Variance',value:'-200', label2:'-$200.00'},
+           {index:'9',label1:'Returned',value:'-500', label2:'-$500.00'}];
+
         var width = 600,
             height = 300,
             radius = Math.min(width, height) / 2,

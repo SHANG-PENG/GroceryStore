@@ -184,10 +184,17 @@
                 return d.value < 0 ? "sidesbar negative" : "sidesbar positive"; 
             })
             .attr("x", function(d) { 
+                // if(d.value > 0){
+                //     return x(Math.min(0, d.value)) + 5; 
+                // }else if(d.value < 0){
+                //     return x(Math.min(0, d.value)) - 5; 
+                // }else{
+                //     return x(Math.min(0, d.value)); 
+                // }    
                 if(d.value > 0){
-                    return x(Math.min(0, d.value)) + 5; 
+                    return x(Math.min(0, d.value)) + 10 + barWidth; 
                 }else if(d.value < 0){
-                    return x(Math.min(0, d.value)) - 5; 
+                    return x(Math.min(0, d.value)) - 15; 
                 }else{
                     return x(Math.min(0, d.value)); 
                 }
