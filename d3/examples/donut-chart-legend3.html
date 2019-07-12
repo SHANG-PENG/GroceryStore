@@ -7,7 +7,7 @@
     <title>donut-chart-legend</title>
     <style>
         path{
-            stroke: #fff;
+            stroke: #EBEBEB;
             stroke-width: 2px;
         }
     </style>
@@ -25,25 +25,53 @@
     //        {index:0, value:'1000.00',label1:'Net Payments', label2:'$100.00',label3:'A'},
     //        {index:1, value:'300',label1:'Non-Cash Tenders Total', label2:'$300.00',label3:'B'},
     //        {index:2, value:'300',label1:'Safe Drop', label2:'$300.00',label3:'C'},
-    //        {index:3, value:'500',label1:'Begin Cash Expected', label2:'$500.00',label3:'D'},
+    //        {index:3, value:'5',label1:'Begin Cash Expected', label2:'$5.00',label3:'D'},
     //        {index:3, value:'-800',label1:'Begin Cash Shortage', label2:'-$800.00',label3:'E'}
     //     ];
-    
 
-    var data = [
-           {index:0, value:'100',label1:'Net Payments', label2:'$100.00'},
-           {index:1, value:'300',label1:'Non-Cash Tenders Total', label2:'$300.00', label3: 'Testing Testing'},
-           {index:2, value:'-300',label1:'Safe Drop', label2:'-$300.00'},
-           {index:3, value:'500',label1:'Begin Cash Expected', label2:'$500.00'},
-           {index:4, value:'-800',label1:'Begin Cash Shortage', label2:'-$800.00'},
+    var old_data = [
+           {index:0, value:'20000.00',label1:'Net Payments', label2:'$100.00'},
+           {index:1, value:'30',label1:'Non-Cash Tenders Total', label2:'$30.00'},
+           {index:2, value:'0',label1:'Safe Drop', label2:'$0.00'},
+           {index:3, value:'5',label1:'Begin Cash Expected', label2:'$5.00'},
+           {index:3, value:'-8',label1:'Begin Cash Shortage', label2:'-$8.00'}
+        ];
+        
+        var max_value = d3.sum(old_data, function(d){
+                return  Math.abs(d.value);
+        });
+
+    var d_value = parseFloat(max_value)/150;
+    var data = old_data.map(function(d){
+        // var item = d;
+        if(Math.abs(d.value) < d_value && d.value != 0){
+            d.value = (d.value > 0)? d_value: d_value * -1;
+        }
+        return d;
+    });
+
+    // var data = [
+    //        {index:0, value:'0.00',label1:'Net Payments', label2:'$0.00'},
+    //        {index:1, value:'0',label1:'Non-Cash Tenders Total', label2:'$0.00'},
+    //        {index:2, value:'0',label1:'Safe Drop', label2:'$0.00'},
+    //        {index:3, value:'0',label1:'Begin Cash Expected', label2:'$0.00'},
+    //        {index:4, value:'0',label1:'Begin Cash Shortage', label2:'$0.00'}
+    //     ];    
+
+    // var data = [
+    //        {index:0, value:'100',label1:'Net Payments', label2:'$100.00'},
+    //        {index:1, value:'300',label1:'Non-Cash Tenders Total', label2:'$300.00', label3: 'Testing Testing'},
+    //        {index:2, value:'-300',label1:'Safe Drop', label2:'-$300.00'},
+    //        {index:3, value:'500',label1:'Begin Cash Expected', label2:'$500.00'},
+    //        {index:4, value:'-800',label1:'Begin Cash Shortage', label2:'-$800.00'},
         //    {index:5, value:'500',label1:'Begin Cash Expected 5', label2:'$500.00'},
         //    {index:6, value:'500',label1:'Begin Cash Expected 6', label2:'$500.00'},
         //    {index:7, value:'500',label1:'Begin Cash Expected 7', label2:'$500.00'},
         //    {index:8, value:'500',label1:'Begin Cash Expected 8', label2:'$500.00'},
-        ];
+        // ];
 
        
-        var hole = {text1:'Cash Owed',text2:'To Employee',text3:'-$300.00'};
+        var hole = {text1:'***',text2:'****',text3:'$0.00'};
 
  
         let _this = this;
@@ -127,6 +155,15 @@
                 }else{
                     return negative_outer_radius * 0.8;
                 }
+            });
+        
+        var ground_color = "#EBEBEB";
+        var ground_arc = d3.svg.arc()
+            .innerRadius(function(d){
+               return inner_radius * 0.8;
+            })
+            .outerRadius(function(d){
+                return outer_radius * 0.8;
             });
 
         var i_arc = d3.svg.arc()
@@ -225,22 +262,30 @@
                 text3.style("cursor","default");
             });
 
-        var i_path = svg.selectAll(".donut-chart-arc")
+         var ground_path = svg.selectAll(".donut-chart-arc")
             .data(pie([{"value": 100}]))
             .enter().append("g")
             .attr("class", "arc")
             .append("path")
-            .attr("d", i_arc)
-            .attr("fill", function(d, i) {
-                return "#3F48CC";
-            })
-            .on("mousemove",function(d){
-                path.style("cursor","pointer");
-            })
-            .on("mouseout",function(d){
-                path.style("cursor","default");
-            });
-
+            .attr("d", ground_arc)
+            .attr("fill", ground_color);
+        
+        // var i_path = svg.selectAll(".donut-chart-arc")
+        //     .data(pie([{"value": 100}]))
+        //     .enter().append("g")
+        //     .attr("class", "arc")
+        //     .append("path")
+        //     .attr("d", i_arc)
+        //     .attr("fill", function(d, i) {
+        //         return "#3F48CC";
+        //     })
+        //     .on("mousemove",function(d){
+        //         path.style("cursor","pointer");
+        //     })
+        //     .on("mouseout",function(d){
+        //         path.style("cursor","default");
+        //     });
+            
         var path = svg.selectAll(".donut-chart-arc")
             .data(pie(path_data))
             .enter().append("g")
